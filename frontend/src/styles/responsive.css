@@ -1,0 +1,39 @@
+/* === Global responsive helpers === */
+
+.page-root {
+  width: 100%;
+}
+
+/* Stack top navigation on small screens */
+@media (max-width: 720px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 10px;
+  }
+}
+
+/* Generic responsive grids used in views */
+.resp-two-cols {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .resp-two-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.resp-three-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .resp-three-cols {
+    grid-template-columns: 1fr;
+  }
+}
