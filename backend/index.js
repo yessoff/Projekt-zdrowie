@@ -12,7 +12,7 @@ const aiRoutes = require("./routes/ai"); // ✅ DODANE
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
 // publiczne
