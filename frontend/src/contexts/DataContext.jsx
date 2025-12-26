@@ -14,8 +14,6 @@ export function useData() {
   return ctx;
 }
 
-const API_BASE = "http://localhost:5001";
-
 export function DataProvider({ children }) {
   const { auth } = useAuth();
   const toast = useToasts();
@@ -68,8 +66,8 @@ export function DataProvider({ children }) {
     setLoading(true);
     try {
       const [rRes, gRes] = await Promise.all([
-        apiFetch(`${API_BASE}/records`, {}, auth.token),
-        apiFetch(`${API_BASE}/goals`, {}, auth.token),
+        apiFetch("/records", {}, auth.token),
+        apiFetch("/goals", {}, auth.token),
       ]);
 
       if (!rRes.ok) {
@@ -174,7 +172,7 @@ export function DataProvider({ children }) {
       };
 
       const isEdit = !!editingId;
-      const url = isEdit ? `${API_BASE}/records/${editingId}` : `${API_BASE}/records`;
+      const url = isEdit ? `/records/${editingId}` : `/records`;
       const method = isEdit ? "PUT" : "POST";
 
       const res = await apiFetch(
@@ -210,7 +208,7 @@ export function DataProvider({ children }) {
     if (!auth?.token) return;
 
     try {
-      const res = await apiFetch(`${API_BASE}/records/${id}`, { method: "DELETE" }, auth.token);
+      const res = await apiFetch(`/records/${id}`, { method: "DELETE" }, auth.token);
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
@@ -237,7 +235,7 @@ export function DataProvider({ children }) {
       };
 
       const res = await apiFetch(
-        `${API_BASE}/goals`,
+        "/goals",
         {
           method: "PUT",
           body: JSON.stringify(payload),
@@ -325,7 +323,7 @@ export function DataProvider({ children }) {
         };
 
         const res = await apiFetch(
-          `${API_BASE}/records`,
+          "/records",
           { method: "POST", body: JSON.stringify(payload) },
           auth.token
         );
@@ -352,16 +350,7 @@ export function DataProvider({ children }) {
     let out = base;
     if (q) {
       out = out.filter((r) => {
-        const hay = [
-          r._id,
-          r.bloodPressure,
-          r.note,
-          r.weight,
-          r.height,
-          r.steps,
-          r.sleepHours,
-          r.mood,
-        ]
+        const hay = [r._id, r.bloodPressure, r.note, r.weight, r.height, r.steps, r.sleepHours, r.mood]
           .map((x) => (x == null ? "" : String(x).toLowerCase()))
           .join(" ");
         return hay.includes(q);

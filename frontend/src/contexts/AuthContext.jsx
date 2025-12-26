@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToasts } from "./ToastContext";
+import { apiFetch } from "../services/api";
 
 const AuthContext = createContext(null);
 
@@ -69,11 +70,15 @@ export function AuthProvider({ children }) {
             }
           : { email: authForm.email, password: authForm.password };
 
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+      const res = await apiFetch(
+        url,
+        {
+          method: "POST",
+          body: JSON.stringify(body),
+        },
+        null
+      );
+      
 
       const data = await res.json().catch(() => ({}));
 

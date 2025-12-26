@@ -1,6 +1,6 @@
 // frontend/src/services/api.js
 
-const API_BASE = import.meta?.env?.VITE_API_URL || "http://localhost:5001";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 function normalizeUrl(url) {
   // jeśli już jest absolutny URL -> zostaw
